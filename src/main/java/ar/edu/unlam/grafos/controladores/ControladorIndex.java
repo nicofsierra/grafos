@@ -77,7 +77,8 @@ public class ControladorIndex {
 		Par par = new Par();
 		ModelMap modelo = new ModelMap();
 		Integer arista = (Integer)request.getSession().getAttribute("aristaActual");
-		arista -= 1;
+		arista = arista - 1;
+		request.getSession().setAttribute("aristaActual", arista);
 		if( arista >0 ){
 			Vertice v1 = servicioCarga.buscarVertices(idGrafo.longValue(), vertice1);
 			Vertice v2 = servicioCarga.buscarVertices(idGrafo.longValue(), vertice2);
@@ -88,7 +89,7 @@ public class ControladorIndex {
 			modelo.put("grafo", idGrafo);
 			modelo.put("aristas", servicioCarga.buscarAristaMaxima(idGrafo.longValue()));
 			modelo.put("vertices",servicioCarga.buscarVerticeMaximo(idGrafo.longValue()));
-			modelo.put("arista", arista);
+			modelo.put("arista", servicioCarga.buscarAristaMaxima(idGrafo.longValue())-arista);
 			modelo.put("extremos", servicioCarga.buscarTodosLosParesDeUnGrafo(servicioCarga.buscarFuncIncidencia(idGrafo.longValue()).getId()));
 			return new ModelAndView("funcion-inc",modelo);
 		}else{
